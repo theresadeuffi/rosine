@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue chez nous chez vous</h1>
+        <div class="form-container">
+            <h2>Inscription</h2>
+            <form id="registration-form" method="post" action="register.php">
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <input type="email" name="email" placeholder="Adresse e-mail" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">S'inscrire</button>
+            </form>
+            <div id="registration-response"></div>
+        </div>
+        <div class="form-container">
+            <h2>Connexion</h2>
+            <form action="login.php" method="post">
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#registration-form').submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'register.php',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#registration-response').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#registration-response').html('Une erreur est survenue lors de l\'inscription.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
